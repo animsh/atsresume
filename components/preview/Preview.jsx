@@ -18,6 +18,9 @@ import { ResumeContext } from "../../pages/builder";
 import dynamic from "next/dynamic";
 import Language from "./Language";
 import Certification from "./Certification";
+import ExtraCurricular from "./ExtraCurricular";
+import { useEffect } from "react";
+import { useState } from "react";
 
 const DragDropContext = dynamic(
   () =>
@@ -138,7 +141,7 @@ const Preview = () => {
               emailicon={<MdEmail />}
               addressicon={<MdLocationOn />}
             />
-            <div className="grid grid-cols-3 gap-1">
+            <div className="inline-flex items-center gap-2 social-media">
               {resumeData.socialMedia.map((socialMedia, index) => {
                 return (
                   <a
@@ -183,6 +186,7 @@ const Preview = () => {
                       <div key={index} className="mb-1">
                         <p className="content i-bold">{item.degree}</p>
                         <p className="content">{item.school}</p>
+                        <p className="sub-content">{item.cgpa}</p>
                         <DateRange
                           startYear={item.startYear}
                           endYear={item.endYear}
@@ -226,6 +230,10 @@ const Preview = () => {
                 title="Certifications"
                 certifications={resumeData.certifications}
               />
+              <ExtraCurricular
+                title="ExtraCurricular"
+                extracurricular={resumeData.extracurricular}
+              />
             </div>
             <div className="col-span-2 space-y-2">
               {resumeData.workExperience.length > 0 && (
@@ -262,14 +270,14 @@ const Preview = () => {
                                 endYear={item.endYear}
                                 id={`work-experience-start-end-date`}
                               />
-                              <p className="content">{item.description}</p>
+                              <p className="sub-content">{item.description}</p>
                               <Droppable
                                 droppableId={`WORK_EXPERIENCE_KEY_ACHIEVEMENT-${index}`}
                                 type="WORK_EXPERIENCE_KEY_ACHIEVEMENT"
                               >
                                 {(provided) => (
                                   <ul
-                                    className="list-disc ul-padding content"
+                                    className="list-disc ul-padding sub-content"
                                     {...provided.droppableProps}
                                     ref={provided.innerRef}
                                   >
@@ -349,18 +357,18 @@ const Preview = () => {
                                 href={item.link}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="content"
+                                className="sub-content"
                               >
                                 {item.link}
                               </Link>
-                              <p className="content">{item.description}</p>
+                              <p className="sub-content">{item.description}</p>
                               <Droppable
                                 droppableId={`PROJECTS_KEY_ACHIEVEMENT-${index}`}
                                 type="PROJECTS_KEY_ACHIEVEMENT"
                               >
                                 {(provided) => (
                                   <ul
-                                    className="list-disc ul-padding content"
+                                    className="list-disc ul-padding sub-content"
                                     {...provided.droppableProps}
                                     ref={provided.innerRef}
                                   >
@@ -412,7 +420,6 @@ const Preview = () => {
 };
 
 const A4PageWrapper = ({ children }) => {
-
   const alertA4Size = () => {
     const preview = document.querySelector(".preview");
     const previewHeight = preview.offsetHeight;
@@ -422,7 +429,11 @@ const A4PageWrapper = ({ children }) => {
     }
   };
 
-  return <div className="w-8.5in" onLoad={alertA4Size}>{children}</div>;
+  return (
+    <div className="w-8.5in" onLoad={alertA4Size}>
+      {children}
+    </div>
+  );
 };
 
 export default Preview;
