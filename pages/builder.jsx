@@ -14,7 +14,7 @@ import Projects from "../components/form/Projects";
 import Education from "../components/form/Education";
 import dynamic from "next/dynamic";
 import Certification from "../components/form/certification";
-import ExtraCurricular from "../components/form/Extracurricular";
+import ExtraCurricular from "../components/form/ExtraCurricular";
 
 const ResumeContext = createContext(DefaultResumeData);
 
